@@ -15,25 +15,14 @@ public class FirstTest extends BaseTest {
     public static WebDriver driver;
     public ExtentReports extent = new ExtentReports();
 
-    public FirstTest() {
 
-       // this.driver
-        setDesiredBrowser("chrome");
-
-        this.driver=BaseTest.getDriver();
-    }
-
-    @BeforeMethod
-    public   void setUp1(){
-
-
-    }
-    @Test
+    @Test(description = "First Test")
     public void PrintNumbers() throws InterruptedException {
-Thread.sleep(5000);
+        this.driver=BaseTest.getDriver();
+
+        Thread.sleep(5000);
 driver.findElement(By.xpath("//*[@type='email']")).sendKeys("gaurav");
-        System.out.println("i"+2);
-        //Assert.assertFalse(true);
+
 
     }
 
@@ -42,10 +31,6 @@ driver.findElement(By.xpath("//*[@type='email']")).sendKeys("gaurav");
 
         driver.close();
     }
-    /*@AfterSuite
-    public void afterSuite(){ //executed after all the tests have ran
 
-        extent.flush();
-    }
-*/
+
 }

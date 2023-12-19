@@ -46,6 +46,7 @@ import com.google.common.base.Function;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 
 /**
  * BaseTest class for environment setting, and all common util methods which are
@@ -86,6 +87,15 @@ public class BaseTest {
 	 * Initialize Actions class reference
 	 */
 	public Actions action;
+
+	@BeforeClass
+	public void openBrowser() {
+
+		// this.driver
+		setDesiredBrowser("chrome");
+
+	}
+
 
 	public static String getApplicationUrl() {
 		return applicationUrl;

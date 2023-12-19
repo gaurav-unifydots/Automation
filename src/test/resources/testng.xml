@@ -2,10 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="Component Tests">
-    <!--<listeners>
-        <listener class-name="com.unifydots.reusablecomponents.TestResultListener"/>
 
-    </listeners>-->
     <test name="Unify Dots Tests" preserve-order="false" parallel="false" thread-count="2">
 
         <classes>

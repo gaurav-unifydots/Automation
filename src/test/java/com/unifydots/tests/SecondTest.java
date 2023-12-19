@@ -13,13 +13,7 @@ import org.testng.annotations.Test;
 public class SecondTest extends BaseTest {
     public static WebDriver driver;
 
-    public SecondTest() {
-        setDesiredBrowser("chrome");
-        this.driver=BaseTest.getDriver();
-
-    }
-
-    @Test
+    @Test(description = "Second Test")
     public void PrintNumbers(){
 
         System.out.println("SecondTest : "+2);
