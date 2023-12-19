@@ -16,7 +16,7 @@ public class SecondTest extends BaseTest {
     public void PrintNumbers(){
 
         loginPage.login1();
-
+loginPage.shutDown();
 
     }
 

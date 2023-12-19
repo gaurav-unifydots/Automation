@@ -17,7 +17,7 @@ public class FirstTest extends BaseTest {
     @Test(description = "First Test")
     public void PrintNumbers() throws InterruptedException {
 loginPage.login();
-
+loginPage.shutDown();
 
 
     }

@@ -1,8 +1,10 @@
 package com.unifydots.pages;
 
+import com.unifydots.utility.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.AfterMethod;
 
 public class LoginPage {
 WebDriver driver;
@@ -26,5 +28,10 @@ WebDriver driver;
         //Assert.assertFalse(true);
         //  this.driver=BaseUtil.driver;
         driver.findElement(By.xpath("//[@email='email']")).sendKeys("gaurav");
+    }
+
+    public  void shutDown(){
+
+        driver.close();
     }
 }

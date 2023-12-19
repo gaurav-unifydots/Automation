@@ -98,11 +98,7 @@ public static LoginPage loginPage;
 		setDesiredBrowser("chrome");
 		loginPage=new LoginPage(driver);
 	}
-	@AfterMethod
-	public  void shutDown(){
 
-		BaseTest.driver.close();
-	}
 
 	public static String getApplicationUrl() {
 		return applicationUrl;
