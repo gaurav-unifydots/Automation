@@ -11,21 +11,14 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class SecondTest extends BaseTest {
-    public static WebDriver driver;
 
     @Test(description = "Second Test")
     public void PrintNumbers(){
 
-        System.out.println("SecondTest : "+2);
-        //Assert.assertFalse(true);
-      //  this.driver=BaseUtil.driver;
-        driver.findElement(By.xpath("//[@email='email']")).sendKeys("gaurav");
+        loginPage.login1();
+
 
     }
 
-    @AfterMethod
-    public  void shutDown(){
 
-        driver.close();
-    }
 }

@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.unifydots.pages.LoginPage;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -46,6 +47,7 @@ import com.google.common.base.Function;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 
 /**
@@ -67,6 +69,7 @@ public class BaseTest {
 //	public static void setProperties(Properties properties) {
 //		commonConfigProperties = properties;
 //	}
+public static LoginPage loginPage;
 
 
 
@@ -93,9 +96,13 @@ public class BaseTest {
 
 		// this.driver
 		setDesiredBrowser("chrome");
-
+		loginPage=new LoginPage(driver);
 	}
+	@AfterMethod
+	public  void shutDown(){
 
+		BaseTest.driver.close();
+	}
 
 	public static String getApplicationUrl() {
 		return applicationUrl;

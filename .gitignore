@@ -6,3 +6,4 @@ target/
 /ExtentReports/
 /bin/
 /allure-results/
+/.idea/
