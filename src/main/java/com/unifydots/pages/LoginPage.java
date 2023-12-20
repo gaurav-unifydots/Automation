@@ -1,5 +1,7 @@
 package com.unifydots.pages;
 
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -19,19 +21,33 @@ public class LoginPage {
     @FindBy(xpath = "//*[@class='oxd-button oxd-button--medium oxd-button--main orangehrm-login-button']")
     private WebElement loginButton;
 
+    @FindBy(xpath = "//*[@class='oxd-userdropdown-name']")
+    private WebElement logOutImage;
+
+    @FindBy(xpath = "//*[contains(text(),'Logout')]")
+    private WebElement logOutButton;
+
     public LoginPage(WebDriver driver) {
 
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    @Step
+    @Severity(SeverityLevel.BLOCKER)
+    @Step("Login to the Application")
     public void login(String UserName, String PassWord) {
         userName.sendKeys(UserName);
         password.sendKeys(PassWord);
         loginButton.click();
 
     }
+
+    @Step
+    public void logOut() {
+        logOutImage.click();
+        logOutButton.click();
+    }
+
 
 
 }

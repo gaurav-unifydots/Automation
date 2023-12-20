@@ -64,22 +64,7 @@ public class BaseTest {
      * initialization of common config file
      */
     public static Properties commonConfigProperties;
-
-
     public static LoginPage loginPage;
-
-
-    /**
-     * FileInputStream class reference variable for common config file location
-     */
-    public FileInputStream commaonConfigLoc;
-    /**
-     * Variable for applicationUrl.
-     */
-    private static String applicationUrl;
-    /**
-     * Initialization of EventFiringWebDriver class
-     */
 
     /**
      * Initialize Actions class reference
@@ -100,13 +85,7 @@ public class BaseTest {
         driver.close();
     }
 
-    public static String getApplicationUrl() {
-        return applicationUrl;
-    }
 
-    public static void setApplicationUrl(String applicationUrl) {
-        BaseTest.applicationUrl = applicationUrl;
-    }
 
     /**
      * Method to set required values to execute test cases, for e.g. test
@@ -134,19 +113,9 @@ public class BaseTest {
      */
     public static WebDriver setDesiredBrowser(String desiredBrowser) {
         switch (desiredBrowser.toLowerCase()) {
-            case "firefox":
-                WebDriverManager.firefoxdriver().setup();
-                driver = new FirefoxDriver();
-                break;
-
             case "chrome":
                 WebDriverManager.chromedriver().setup();
                 driver = new ChromeDriver();
-                break;
-
-            case "ie":
-                WebDriverManager.iedriver().setup();
-                driver = new InternetExplorerDriver();
                 break;
 
             // Initialize "Chrome" as default browser
@@ -173,14 +142,14 @@ public class BaseTest {
     /**
      * Method to get the title of current page
      */
-    public String getTitleOfApplication() {
+    public String getTitle() {
         return driver.getTitle();
     }
 
     /**
      * Method to get the current url of the application
      */
-    public String getCurrentOfApplication() {
+    public String getCurrentURL() {
         return driver.getCurrentUrl();
     }
 
@@ -262,40 +231,7 @@ public class BaseTest {
                 .equalsIgnoreCase(expectedString.trim()));
     }
 
-    /**
-     * This method is used to get a particular date in a particular format.
-     *
-     * @param offsetFromToday Number of days to be added or subtracted from today.
-     * @param format          Required format of the date example dd.MM.yyyy
-     * @return date in String format
-     */
-    @SuppressWarnings("static-method")
-    public String getDateInFormattedString(int offsetFromToday, String format) {
 
-        DateFormat df = new SimpleDateFormat(format);
-        Calendar today = Calendar.getInstance();
-        today.add(Calendar.DATE, offsetFromToday);
-        return df.format(today.getTime());
-
-    }
-
-    /**
-     * This method is used to get a particular date in a particular format.
-     *
-     * @param offsetFromTodayInMonths Number of months to be added or subtracted
-     *                                from today.
-     * @param format                  Required format of the date example dd.MM.yyyy
-     * @return date in String format
-     */
-    @SuppressWarnings("static-method")
-    public String getDateInFormattedStringMonths(int offsetFromTodayInMonths, String format) {
-
-        DateFormat df = new SimpleDateFormat(format);
-        Calendar today = Calendar.getInstance();
-        today.add(Calendar.MONTH, offsetFromTodayInMonths);
-        return df.format(today.getTime());
-
-    }
 
     /**
      * Method to verify if element is present
@@ -355,25 +291,7 @@ public class BaseTest {
         }
     }
 
-    /**
-     * Method which returns the date object from the String date passed. String date
-     * has to be in the format of 'hours:minutes:seconds'
-     *
-     * @param date String date which has to be converted
-     * @return formatted date object; used internally
-     */
-    @SuppressWarnings("static-method")
-    private Date getCurrentDateFromTable(String date) {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
-        Date dateObj = null;
-        try {
-            dateObj = sdf.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return dateObj;
-    }
 
     /**
      * Utility to switch between windows
@@ -470,18 +388,6 @@ public class BaseTest {
 
     }
 
-    /**
-     * Used internally to format system date as per the requirement.
-     *
-     * @return formatted date as per the requirement
-     */
-    protected Date dateFormatConversion() {
-
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
-        String dateConvert = sdf.format(date);
-        return getCurrentDateFromTable(dateConvert);
-    }
 
     /**
      * This is sleep method from java only use it when uttermost required
@@ -594,7 +500,14 @@ public class BaseTest {
         driver.navigate().refresh();
 
     }
-
+    /**
+     * Method to read Properties File.
+     *
+     * @param country String.It should be country folder which we creates under src/test/resources/CONFIG.
+     * @param environmentFolderName String.It should be environment folder for which you want to extract Values.Expected Values
+     * can be "DEV","QA","PROD","COMMON".
+     * @note: For COMMON,You dnt need to create any folder.Put the file under /src/test/resources/CONFIG/{countryFolderName}
+     */
     public static Properties readPropertiesFileContents(String country,String environmentFolderName) throws IOException {
         InputStream inputStream = null;
         Properties prop = new Properties();
