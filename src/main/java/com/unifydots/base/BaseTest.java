@@ -86,7 +86,6 @@ public class BaseTest {
     }
 
 
-
     /**
      * Method to set required values to execute test cases, for e.g. test
      * environment, platform, and browser {@inheritDoc}
@@ -124,12 +123,6 @@ public class BaseTest {
                 driver = new ChromeDriver();
                 break;
         }
-        /**
-         * uncomment below mentioned code to see line by line execution description
-         * e_driver = new EventFiringWebDriver(driver); // Now create object of
-         * EventListerHandler to register it with EventFiringWebDriver eventListener =
-         * new WebEventListener(); e_driver.register(eventListener); driver = e_driver;
-         */
         driver.manage().window().maximize();
         driver.manage().deleteAllCookies();
         driver.manage().timeouts().pageLoadTimeout(SeleniumConstant.PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
@@ -232,7 +225,6 @@ public class BaseTest {
     }
 
 
-
     /**
      * Method to verify if element is present
      *
@@ -290,7 +282,6 @@ public class BaseTest {
             return false;
         }
     }
-
 
 
     /**
@@ -500,35 +491,36 @@ public class BaseTest {
         driver.navigate().refresh();
 
     }
+
     /**
      * Method to read Properties File.
      *
-     * @param country String.It should be country folder which we creates under src/test/resources/CONFIG.
+     * @param country               String.It should be country folder which we creates under src/test/resources/CONFIG.
      * @param environmentFolderName String.It should be environment folder for which you want to extract Values.Expected Values
-     * can be "DEV","QA","PROD","COMMON".
+     *                              can be "DEV","QA","PROD","COMMON".
      * @note: For COMMON,You dnt need to create any folder.Put the file under /src/test/resources/CONFIG/{countryFolderName}
      */
-    public static Properties readPropertiesFileContents(String country,String environmentFolderName) throws IOException {
+    public static Properties readPropertiesFileContents(String country, String environmentFolderName) throws IOException {
         InputStream inputStream = null;
         Properties prop = new Properties();
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
 
-        if(environmentFolderName.equalsIgnoreCase("DEV")){
-            inputStream = loader.getResourceAsStream("CONFIG/"+country+"/"+environmentFolderName+"/config.properties");
+        if (environmentFolderName.equalsIgnoreCase("DEV")) {
+            inputStream = loader.getResourceAsStream("CONFIG/" + country + "/" + environmentFolderName + "/config.properties");
 
-        }else if(environmentFolderName.equalsIgnoreCase("PROD")){
+        } else if (environmentFolderName.equalsIgnoreCase("PROD")) {
 
-            inputStream = loader.getResourceAsStream("CONFIG/"+country+"/"+environmentFolderName+"/config.properties");
+            inputStream = loader.getResourceAsStream("CONFIG/" + country + "/" + environmentFolderName + "/config.properties");
 
-        }else if(environmentFolderName.equalsIgnoreCase("QA")){
+        } else if (environmentFolderName.equalsIgnoreCase("QA")) {
 
-             inputStream = loader.getResourceAsStream("CONFIG/"+country+"/"+environmentFolderName+"/config.properties");
-        }else if(environmentFolderName.equalsIgnoreCase("COMMON")){
-            inputStream = loader.getResourceAsStream("CONFIG/"+country+"/commonconfig.properties");
+            inputStream = loader.getResourceAsStream("CONFIG/" + country + "/" + environmentFolderName + "/config.properties");
+        } else if (environmentFolderName.equalsIgnoreCase("COMMON")) {
+            inputStream = loader.getResourceAsStream("CONFIG/" + country + "/commonconfig.properties");
 
 
         }
-        prop= new Properties();
+        prop = new Properties();
         prop.load(inputStream);
         return prop;
     }
