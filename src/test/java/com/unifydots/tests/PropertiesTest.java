@@ -2,6 +2,7 @@ package com.unifydots.tests;
 
 import com.unifydots.base.BaseTest;
 import org.apache.log4j.Logger;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -18,8 +19,10 @@ public class PropertiesTest  {
         log.debug("base url value from property file ");
         String value=BaseTest.getEnvironmentConfig("base.url");
         log.error(value);
+        Assert.assertNotNull(value,"Base URL cannot be null");
         value=BaseTest.getCountryConfig("base.url");
         log.info(value);
+        Assert.assertNotNull(value,"Base URL cannot be null");
 
     }
 
