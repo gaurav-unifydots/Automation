@@ -1,0 +1,9 @@
+target/
+/*.classpath
+/*.project
+/*.settings
+/test-output/
+/ExtentReports/
+/bin/
+/allure-results/
+/.idea/
