@@ -85,7 +85,6 @@ public class BaseTest {
         driver.close();
     }
 
-
     /**
      * Method to set required values to execute test cases, for e.g. test
      * environment, platform, and browser {@inheritDoc}
