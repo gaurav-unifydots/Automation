@@ -1,0 +1,11 @@
+DEBUG : 2023-12-20 19:03:37 ResolutionCache:186 - Resolution chrome=120 in cache (valid until 19:14:00 20/12/2023 IST)
+DEBUG : 2023-12-20 19:03:37 ResolutionCache:186 - Resolution chrome120=120.0.6099.109 in cache (valid until 10:13:28 21/12/2023 IST)
+INFO  : 2023-12-20 19:03:37 WebDriverManager:1212 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+DEBUG : 2023-12-20 19:03:37 WebDriverManager:1167 - Driver chromedriver 120.0.6099.109 found in cache
+INFO  : 2023-12-20 19:03:37 WebDriverManager:1265 - Exporting webdriver.chrome.driver as C:\Users\GauravMahajan\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+DEBUG : 2023-12-20 19:06:34 ResolutionCache:186 - Resolution chrome=120 in cache (valid until 19:14:00 20/12/2023 IST)
+DEBUG : 2023-12-20 19:06:34 ResolutionCache:186 - Resolution chrome120=120.0.6099.109 in cache (valid until 10:13:28 21/12/2023 IST)
+INFO  : 2023-12-20 19:06:34 WebDriverManager:1212 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+DEBUG : 2023-12-20 19:06:34 WebDriverManager:1167 - Driver chromedriver 120.0.6099.109 found in cache
+INFO  : 2023-12-20 19:06:34 WebDriverManager:1265 - Exporting webdriver.chrome.driver as C:\Users\GauravMahajan\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+DEBUG : 2023-12-20 19:08:43 FirstTest:15 - base url value from property file 

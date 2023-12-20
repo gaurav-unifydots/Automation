@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 import com.unifydots.pages.LoginPage;
 import com.unifydots.utility.SeleniumConstant;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -54,15 +55,13 @@ import org.testng.annotations.BeforeTest;
  * used by across all modules.
  */
 public class BaseTest {
+    public static final Logger log = Logger.getLogger(BaseTest.class);
 
     /**
      * Object to hold RemoteWebDriver value.
      */
     public static WebDriver driver;
 
-    /**
-     * initialization of common config file
-     */
     public static Properties commonConfigProperties;
     public static LoginPage loginPage;
 
@@ -93,6 +92,7 @@ public class BaseTest {
 
         try {
             /* select desired browser */
+            log.info("base url value from property file ");
             setDesiredBrowser("chrome");
         } catch (Throwable e) {
             e.printStackTrace();
