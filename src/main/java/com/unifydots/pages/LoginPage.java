@@ -42,7 +42,8 @@ public class LoginPage {
 
     }
 
-    @Step
+    @Severity(SeverityLevel.BLOCKER)
+    @Step("Logout from the Application")
     public void logOut() {
         logOutImage.click();
         logOutButton.click();
