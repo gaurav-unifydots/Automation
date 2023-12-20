@@ -132,8 +132,6 @@
                 <version>3.11.0</version>
 
                 <configuration>
-                    <!--<source>11</source>
-                    <target>11</target>-->
                     <release>8</release>
 
                 </configuration>
@@ -149,10 +147,6 @@
                     <testFailureIgnore>true</testFailureIgnore>
 
                     <suiteXmlFiles>
-                        <!--
-                                                <classpathScope>test</classpathScope>
-                        -->
-
                         <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
 
