@@ -523,4 +523,35 @@ public class BaseTest {
         prop.load(inputStream);
         return prop;
     }
+
+    /**
+     * Method to read Properties File.
+     */
+    public static String getEnvironmentConfig(String key) throws IOException {
+        InputStream inputStream = null;
+        Properties prop = new Properties();
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+
+        inputStream = loader.getResourceAsStream("CONFIG/IN/DEV/"+"/config.properties");
+        prop = new Properties();
+        prop.load(inputStream);
+
+        String value=prop.getProperty(key);
+        return value;
+    }
+
+    /**
+     * Method to read Common Properties File.
+     */
+    public static String getCountryConfig(String key) throws IOException {
+        InputStream inputStream = null;
+        Properties prop = new Properties();
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        inputStream = loader.getResourceAsStream("CONFIG/IN"+"/commonconfig.properties");
+        prop = new Properties();
+        prop.load(inputStream);
+        String value=prop.getProperty(key);
+        return value;
+    }
+
 }
