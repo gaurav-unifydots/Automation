@@ -528,15 +528,8 @@ public class BaseTest {
      * Method to read Properties File.
      */
     public static String getEnvironmentConfig(String key) throws IOException {
-        InputStream inputStream = null;
-        Properties prop = new Properties();
-        ClassLoader loader = Thread.currentThread().getContextClassLoader();
-
-        inputStream = loader.getResourceAsStream("CONFIG/IN/DEV/"+"config.properties");
-        prop = new Properties();
-        prop.load(inputStream);
-
-        String value=prop.getProperty(key);
+        Properties application=BaseTest.readPropertiesFileContents("EN","DEV");
+        String value=application.getProperty(key);
         return value;
     }
 
@@ -544,13 +537,8 @@ public class BaseTest {
      * Method to read Common Properties File.
      */
     public static String getCountryConfig(String key) throws IOException {
-        InputStream inputStream = null;
-        Properties prop = new Properties();
-        ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        inputStream = loader.getResourceAsStream("CONFIG/IN/"+"commonconfig.properties");
-        prop = new Properties();
-        prop.load(inputStream);
-        String value=prop.getProperty(key);
+        Properties application=BaseTest.readPropertiesFileContents("EN","COMMON");
+        String value=application.getProperty(key);
         return value;
     }
 
