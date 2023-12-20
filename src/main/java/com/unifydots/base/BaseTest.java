@@ -532,7 +532,7 @@ public class BaseTest {
         Properties prop = new Properties();
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
 
-        inputStream = loader.getResourceAsStream("CONFIG/IN/DEV/"+"/config.properties");
+        inputStream = loader.getResourceAsStream("CONFIG/IN/DEV/"+"config.properties");
         prop = new Properties();
         prop.load(inputStream);
 
@@ -547,7 +547,7 @@ public class BaseTest {
         InputStream inputStream = null;
         Properties prop = new Properties();
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        inputStream = loader.getResourceAsStream("CONFIG/IN"+"/commonconfig.properties");
+        inputStream = loader.getResourceAsStream("CONFIG/IN/"+"commonconfig.properties");
         prop = new Properties();
         prop.load(inputStream);
         String value=prop.getProperty(key);
