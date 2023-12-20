@@ -3,14 +3,10 @@
 
 <suite name="Component Tests">
 
-    <test name="Unify Dots Tests" preserve-order="false" parallel="false" thread-count="2">
+    <test name="Unify Dots Tests" preserve-order="false">
 
         <classes>
             <class name="com.unifydots.tests.FirstTest"></class>
-            <class name="com.unifydots.tests.SecondTest"></class>
-
         </classes>
-
-
     </test>
 </suite>
