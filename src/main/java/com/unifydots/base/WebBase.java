@@ -496,17 +496,17 @@ public class WebBase {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
 
         if (environmentFolderName.equalsIgnoreCase("DEV")) {
-            inputStream = loader.getResourceAsStream("CONFIG/" + country + "/" + environmentFolderName + "/config.properties");
+            inputStream = loader.getResourceAsStream("config/" + country + "/" + environmentFolderName + "/config.properties");
 
         } else if (environmentFolderName.equalsIgnoreCase("PROD")) {
 
-            inputStream = loader.getResourceAsStream("CONFIG/" + country + "/" + environmentFolderName + "/config.properties");
+            inputStream = loader.getResourceAsStream("config/" + country + "/" + environmentFolderName + "/config.properties");
 
         } else if (environmentFolderName.equalsIgnoreCase("QA")) {
 
-            inputStream = loader.getResourceAsStream("CONFIG/" + country + "/" + environmentFolderName + "/config.properties");
+            inputStream = loader.getResourceAsStream("config/" + country + "/" + environmentFolderName + "/config.properties");
         } else if (environmentFolderName.equalsIgnoreCase("COMMON")) {
-            inputStream = loader.getResourceAsStream("CONFIG/" + country + "/commonconfig.properties");
+            inputStream = loader.getResourceAsStream("config/" + country + "/commonconfig.properties");
 
 
         }
