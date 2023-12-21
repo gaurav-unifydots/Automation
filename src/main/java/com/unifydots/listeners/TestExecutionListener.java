@@ -1,6 +1,5 @@
 package com.unifydots.listeners;
 
-
 import com.unifydots.base.WebBase;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
@@ -28,7 +27,6 @@ public class TestExecutionListener implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult result) {
-// TODO Auto-generated method stub
     }
 
     @Override
@@ -39,9 +37,7 @@ public class TestExecutionListener implements ITestListener {
     @Override
     public void onTestFailure(ITestResult iTestResult) {
         System.out.println("I am in onTestFailure method " + getTestMethodName(iTestResult) + " failed");
-// Object testClass = iTestResult.getInstance();
         WebDriver driver = WebBase.getDriver();
-// Allure ScreenShot and Save TestLog
         if (driver instanceof WebDriver) {
             System.out.println("Screenshot captured for test case:" + getTestMethodName(iTestResult));
             saveFailureScreenShot(driver);
@@ -58,10 +54,8 @@ public class TestExecutionListener implements ITestListener {
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
         System.out.println("I am in onTestFailure method " + getTestMethodName(iTestResult) + " failed");
-// Object testClass = iTestResult.getInstance();
         WebDriver driver = WebBase.getDriver();
 
-// Allure ScreenShot and Save TestLog
         if (driver instanceof WebDriver) {
             System.out.println("Screenshot captured for test case:" + getTestMethodName(iTestResult));
             saveFailureScreenShot(driver);

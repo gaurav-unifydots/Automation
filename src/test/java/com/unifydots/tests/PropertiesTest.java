@@ -18,10 +18,8 @@ public class PropertiesTest  {
         Properties application= WebBase.readPropertiesFileContents("EN","COMMON");
         log.debug("base url value from property file ");
         String value= WebBase.getEnvironmentConfig("base.url");
-        log.error(value);
         Assert.assertNotNull(value,"Base URL cannot be null");
         value= WebBase.getCountryConfig("base.url");
-        log.info(value);
         Assert.assertNotNull(value,"Base URL cannot be null");
 
     }
