@@ -1,6 +1,6 @@
 package com.unifydots.tests;
 
-import com.unifydots.base.BaseTest;
+import com.unifydots.base.WebBase;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -15,12 +15,12 @@ public class PropertiesTest  {
 
     @Test(description = "Properties Test")
     public void PrintNumbers() throws IOException {
-        Properties application=BaseTest.readPropertiesFileContents("EN","COMMON");
+        Properties application= WebBase.readPropertiesFileContents("EN","COMMON");
         log.debug("base url value from property file ");
-        String value=BaseTest.getEnvironmentConfig("base.url");
+        String value= WebBase.getEnvironmentConfig("base.url");
         log.error(value);
         Assert.assertNotNull(value,"Base URL cannot be null");
-        value=BaseTest.getCountryConfig("base.url");
+        value= WebBase.getCountryConfig("base.url");
         log.info(value);
         Assert.assertNotNull(value,"Base URL cannot be null");
 
