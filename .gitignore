@@ -7,3 +7,4 @@ target/
 /bin/
 /allure-results/
 /.idea/
+/unifydots.qa.iml

@@ -1,18 +1,12 @@
 package com.unifydots.base;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -22,6 +16,7 @@ import java.util.regex.Pattern;
 import com.unifydots.pages.LoginPage;
 import com.unifydots.utility.SeleniumConstant;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -32,8 +27,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -46,24 +40,19 @@ import com.google.common.base.Function;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 
 /**
  * BaseTest class for environment setting, and all common util methods which are
  * used by across all modules.
  */
-public class BaseTest {
+public class WebBase {
+    public static final Logger log = Logger.getLogger(WebBase.class);
 
     /**
      * Object to hold RemoteWebDriver value.
      */
     public static WebDriver driver;
-
-    /**
-     * initialization of common config file
-     */
-    public static Properties commonConfigProperties;
     public static LoginPage loginPage;
 
     /**
@@ -74,14 +63,12 @@ public class BaseTest {
     @BeforeTest
     public static void openBrowser() {
 
-        // this.driver
         driver = setDesiredBrowser("chrome");
         loginPage = new LoginPage(driver);
     }
 
     @AfterTest
     public void shutDown() {
-
         driver.close();
     }
 
@@ -93,6 +80,7 @@ public class BaseTest {
 
         try {
             /* select desired browser */
+            log.info("base url value from property file ");
             setDesiredBrowser("chrome");
         } catch (Throwable e) {
             e.printStackTrace();
@@ -112,6 +100,9 @@ public class BaseTest {
     public static WebDriver setDesiredBrowser(String desiredBrowser) {
         switch (desiredBrowser.toLowerCase()) {
             case "chrome":
+                ChromeOptions chromeOptions=new ChromeOptions();
+                chromeOptions.addArguments("--no-sandbox");
+                chromeOptions.addArguments("--disable-dev-shm-usage");
                 WebDriverManager.chromedriver().setup();
                 driver = new ChromeDriver();
                 break;
@@ -127,7 +118,7 @@ public class BaseTest {
         driver.manage().timeouts().pageLoadTimeout(SeleniumConstant.PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(SeleniumConstant.IMPLICIT_WAIT, TimeUnit.SECONDS);
         driver.manage().timeouts().setScriptTimeout(SeleniumConstant.SETSCRIPT_TIMEOUT, TimeUnit.SECONDS);
-        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+        driver.get("https://www.saucedemo.com/");
         return driver;
     }
 
@@ -505,17 +496,17 @@ public class BaseTest {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
 
         if (environmentFolderName.equalsIgnoreCase("DEV")) {
-            inputStream = loader.getResourceAsStream("CONFIG/" + country + "/" + environmentFolderName + "/config.properties");
+            inputStream = loader.getResourceAsStream("config/" + country + "/" + environmentFolderName + "/config.properties");
 
         } else if (environmentFolderName.equalsIgnoreCase("PROD")) {
 
-            inputStream = loader.getResourceAsStream("CONFIG/" + country + "/" + environmentFolderName + "/config.properties");
+            inputStream = loader.getResourceAsStream("config/" + country + "/" + environmentFolderName + "/config.properties");
 
         } else if (environmentFolderName.equalsIgnoreCase("QA")) {
 
-            inputStream = loader.getResourceAsStream("CONFIG/" + country + "/" + environmentFolderName + "/config.properties");
+            inputStream = loader.getResourceAsStream("config/" + country + "/" + environmentFolderName + "/config.properties");
         } else if (environmentFolderName.equalsIgnoreCase("COMMON")) {
-            inputStream = loader.getResourceAsStream("CONFIG/" + country + "/commonconfig.properties");
+            inputStream = loader.getResourceAsStream("config/" + country + "/commonconfig.properties");
 
 
         }
@@ -523,4 +514,24 @@ public class BaseTest {
         prop.load(inputStream);
         return prop;
     }
+
+    /**
+     * Method to read Properties File.
+     */
+    public static String getEnvironmentConfig(String key) throws IOException {
+        Properties application= WebBase.readPropertiesFileContents("EN","DEV");
+        String value=application.getProperty(key);
+        return value;
+    }
+
+    /**
+     * Method to read Common Properties File.
+     */
+    public static String getCountryConfig(String key) throws IOException {
+        Properties application= WebBase.readPropertiesFileContents("EN","COMMON");
+        String value=application.getProperty(key);
+        return value;
+    }
+
+
 }

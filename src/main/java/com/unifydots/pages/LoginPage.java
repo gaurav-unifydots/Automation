@@ -1,27 +1,28 @@
 package com.unifydots.pages;
 
+import com.unifydots.base.WebBase;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
 public class LoginPage {
     public static WebDriver driver;
 
-    @FindBy(xpath = "//*[@name='username']")
-    private WebElement userName ;
+    @FindBy(xpath = "//*[@name='user-name']")
+    private WebElement userName;
 
     @FindBy(xpath = "//*[@name='password']")
-    private WebElement password ;
+    private WebElement password;
 
-    @FindBy(xpath = "//*[@class='oxd-button oxd-button--medium oxd-button--main orangehrm-login-button']")
+    @FindBy(xpath = "//*[@id='login-button']")
     private WebElement loginButton;
 
-    @FindBy(xpath = "//*[@class='oxd-userdropdown-name']")
+    @FindBy(xpath = "//*[contains(text(),'Open Menu')]")
     private WebElement logOutImage;
 
     @FindBy(xpath = "//*[contains(text(),'Logout')]")
@@ -40,6 +41,12 @@ public class LoginPage {
         password.sendKeys(PassWord);
         loginButton.click();
 
+        try {
+            Assert.assertEquals(WebBase.getDriver().getTitle(), "123");
+        } catch (AssertionError e) {
+            Assert.fail();
+        }
+
     }
 
     @Severity(SeverityLevel.BLOCKER)
@@ -48,7 +55,6 @@ public class LoginPage {
         logOutImage.click();
         logOutButton.click();
     }
-
 
 
 }
