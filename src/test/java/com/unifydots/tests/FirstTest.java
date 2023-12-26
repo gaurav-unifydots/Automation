@@ -3,7 +3,6 @@ package com.unifydots.tests;
 import com.unifydots.base.WebBase;
 import com.unifydots.listeners.TestExecutionListener;
 import org.apache.log4j.Logger;
-import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
