@@ -11,7 +11,7 @@ import org.testng.ITestResult;
 public class RetryFailedCases implements IRetryAnalyzer {
  
     private int count = 0;
-    private static int maxTry = 0; //zero if you dnt want to run failed testcases
+    private static int maxTry = 1; //zero if you dnt want to run failed testcases
  
     public boolean retry(ITestResult iTestResult) {
         if (!iTestResult.isSuccess()) {                      //Check if test not succeed

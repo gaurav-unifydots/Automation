@@ -37,7 +37,8 @@ public class TestExecutionListener implements ITestListener {
     @Override
     public void onTestFailure(ITestResult iTestResult) {
         System.out.println("I am in onTestFailure method " + getTestMethodName(iTestResult) + " failed");
-        WebDriver driver = WebBase.getDriver();
+        Object testClass=iTestResult.getInstance();
+        WebDriver driver = ((WebBase)testClass).getDriver();
         if (driver instanceof WebDriver) {
             System.out.println("Screenshot captured for test case:" + getTestMethodName(iTestResult));
             saveFailureScreenShot(driver);
@@ -54,8 +55,8 @@ public class TestExecutionListener implements ITestListener {
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
         System.out.println("I am in onTestFailure method " + getTestMethodName(iTestResult) + " failed");
-        WebDriver driver = WebBase.getDriver();
-
+        Object testClass=iTestResult.getInstance();
+        WebDriver driver = ((WebBase)testClass).getDriver();
         if (driver instanceof WebDriver) {
             System.out.println("Screenshot captured for test case:" + getTestMethodName(iTestResult));
             saveFailureScreenShot(driver);
@@ -71,6 +72,5 @@ public class TestExecutionListener implements ITestListener {
 
     @Override
     public void onFinish(ITestContext context) {
-
     }
 }
