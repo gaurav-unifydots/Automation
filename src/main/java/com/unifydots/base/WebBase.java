@@ -3,6 +3,7 @@ package com.unifydots.base;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,18 +18,15 @@ import com.unifydots.pages.LoginPage;
 import com.unifydots.utility.SeleniumConstant;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.aspectj.lang.annotation.Before;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
@@ -40,7 +38,9 @@ import com.google.common.base.Function;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
 
 /**
  * BaseTest class for environment setting, and all common util methods which are
@@ -61,9 +61,10 @@ public class WebBase {
     public Actions action;
 
     @BeforeTest
-    public static void openBrowser() {
+    @Parameters("browser")
+    public static void openBrowser(String browser) {
 
-        driver = setDesiredBrowser("chrome");
+        driver = setDesiredBrowser(browser);
         loginPage = new LoginPage(driver);
     }
 
@@ -100,12 +101,32 @@ public class WebBase {
     public static WebDriver setDesiredBrowser(String desiredBrowser) {
         switch (desiredBrowser.toLowerCase()) {
             case "chrome":
-                ChromeOptions chromeOptions=new ChromeOptions();
+                ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--no-sandbox");
                 chromeOptions.addArguments("--disable-dev-shm-usage");
+                chromeOptions.setPageLoadStrategy(PageLoadStrategy.NONE);
+                chromeOptions.addArguments("--disable-features=VizDisplayCompositor");
+                chromeOptions.addArguments("window-size=1920,1080");
                 WebDriverManager.chromedriver().setup();
-                driver = new ChromeDriver();
+                driver = new ChromeDriver(chromeOptions);
                 break;
+            case "firefox":
+                ClassLoader loader = Thread.currentThread().getContextClassLoader();
+                String url = loader.getResource("com.unifydots.driver"+"/"+"geckodriver.exe").getPath();
+                System.setProperty("webdriver.gecko.driver", url);
+                DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+                capabilities.setCapability("marionette", true);
+                driver = new FirefoxDriver(capabilities);
+                break;
+            case "ie":
+                WebDriverManager.iedriver().setup();
+                driver = new InternetExplorerDriver();
+                break;
+            case "edge":
+                WebDriverManager.edgedriver().setup();
+                driver = new EdgeDriver();
+                break;
+
 
             // Initialize "Chrome" as default browser
             default:
@@ -519,8 +540,8 @@ public class WebBase {
      * Method to read Properties File.
      */
     public static String getEnvironmentConfig(String key) throws IOException {
-        Properties application= WebBase.readPropertiesFileContents("EN","DEV");
-        String value=application.getProperty(key);
+        Properties application = readPropertiesFileContents("EN", "DEV");
+        String value = application.getProperty(key);
         return value;
     }
 
@@ -528,8 +549,8 @@ public class WebBase {
      * Method to read Common Properties File.
      */
     public static String getCountryConfig(String key) throws IOException {
-        Properties application= WebBase.readPropertiesFileContents("EN","COMMON");
-        String value=application.getProperty(key);
+        Properties application = readPropertiesFileContents("EN", "COMMON");
+        String value = application.getProperty(key);
         return value;
     }
 
