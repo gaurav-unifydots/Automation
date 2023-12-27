@@ -3,6 +3,7 @@ package com.unifydots.base;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,8 +69,7 @@ public class WebBase {
     }
 
     @AfterTest
-    @Parameters("browser")
-    public void shutDown(String browser) {
+    public void shutDown() {
         driver.close();
     }
 
@@ -111,7 +111,9 @@ public class WebBase {
                 driver = new ChromeDriver(chromeOptions);
                 break;
             case "firefox":
-                System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "\\src\\main\\resources\\com.unifydots.driver\\geckodriver.exe");
+                ClassLoader loader = Thread.currentThread().getContextClassLoader();
+                String url = loader.getResource("com.unifydots.driver"+"/"+"geckodriver.exe").getPath();
+                System.setProperty("webdriver.gecko.driver", url);
                 DesiredCapabilities capabilities = DesiredCapabilities.firefox();
                 capabilities.setCapability("marionette", true);
                 driver = new FirefoxDriver(capabilities);

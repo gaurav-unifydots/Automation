@@ -40,13 +40,7 @@ public class LoginPage {
         userName.sendKeys(UserName);
         password.sendKeys(PassWord);
         loginButton.click();
-
-       // try {
-            Assert.assertEquals(WebBase.getDriver().getTitle(), "123");
-       // } catch (AssertionError e) {
-           // Assert.fail();
-       // }
-
+        Assert.assertEquals(WebBase.getDriver().getTitle(), "123");
     }
 
     @Severity(SeverityLevel.BLOCKER)
