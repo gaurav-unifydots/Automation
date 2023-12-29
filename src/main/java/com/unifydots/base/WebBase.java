@@ -37,10 +37,7 @@ import com.google.common.base.Function;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 
 /**
  * BaseTest class for environment setting, and all common util methods which are
@@ -59,18 +56,35 @@ public class WebBase {
      * Initialize Actions class reference
      */
     public Actions action;
+    protected static
+    ThreadLocal<WebDriver> threadLocalDriver = new ThreadLocal<>();
+
 
     @BeforeTest
     @Parameters("browser")
     public static void openBrowser(String browser) {
-
-        driver = setDesiredBrowser(browser);
+        WebDriver driver = BrowserManager.doBrowserSetup(browser);
+        //set driver
+        threadLocalDriver.set(driver);
+        System.out.println("Before Test Thread ID: " + Thread.currentThread().getId());
+        driver.manage().window().maximize();
+        driver.manage().deleteAllCookies();
+        driver.manage().timeouts().pageLoadTimeout(SeleniumConstant.PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(SeleniumConstant.IMPLICIT_WAIT, TimeUnit.SECONDS);
+        driver.manage().timeouts().setScriptTimeout(SeleniumConstant.SETSCRIPT_TIMEOUT, TimeUnit.SECONDS);
+        getDriver().get("https://www.saucedemo.com/");
         loginPage = new LoginPage(driver);
     }
 
+    public static WebDriver getDriver() {
+        return threadLocalDriver.get();
+    }
+
     @AfterTest
-    public void shutDown() {
-        driver.close();
+    public static void shutDown() {
+        getDriver().quit();
+        System.out.println("After Test Thread ID: " + Thread.currentThread().getId());
+        threadLocalDriver.remove();
     }
 
     /**
@@ -88,9 +102,10 @@ public class WebBase {
         }
     }
 
-    public static WebDriver getDriver() {
+    /*public static WebDriver getDriver() {
         return driver;
     }
+*/
 
     /**
      * Method to set browser for execution for local machine. While calling this
@@ -111,9 +126,7 @@ public class WebBase {
                 driver = new ChromeDriver(chromeOptions);
                 break;
             case "firefox":
-                ClassLoader loader = Thread.currentThread().getContextClassLoader();
-                String url = loader.getResource("com.unifydots.driver"+"/"+"geckodriver.exe").getPath();
-                System.setProperty("webdriver.gecko.driver", url);
+                System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "//src//main//resources//com.unifydots.driver//" + "geckodriver.exe");
                 DesiredCapabilities capabilities = DesiredCapabilities.firefox();
                 capabilities.setCapability("marionette", true);
                 driver = new FirefoxDriver(capabilities);
@@ -126,9 +139,6 @@ public class WebBase {
                 WebDriverManager.edgedriver().setup();
                 driver = new EdgeDriver();
                 break;
-
-
-            // Initialize "Chrome" as default browser
             default:
                 WebDriverManager.chromedriver().setup();
                 driver = new ChromeDriver();
@@ -438,8 +448,6 @@ public class WebBase {
      * @param str   string to be verified
      * @param reqEx regular expression
      * @return true /false
-     * @author Abhishek
-     * <p>
      * Method to verify string by using regular expression
      */
     @SuppressWarnings("static-method")
