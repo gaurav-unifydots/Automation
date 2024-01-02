@@ -9,10 +9,10 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-public class BrowserManager {
+public class DriverManager {
 
 
-    public static WebDriver doBrowserSetup(String browserName) {
+    public static WebDriver getDriver(String browserName) {
 
         WebDriver driver = null;
         if (browserName.equalsIgnoreCase("chrome")) {

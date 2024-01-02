@@ -3,7 +3,6 @@ package com.unifydots.base;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +17,6 @@ import com.unifydots.pages.LoginPage;
 import com.unifydots.utility.SeleniumConstant;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.aspectj.lang.annotation.Before;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -63,7 +61,7 @@ public class WebBase {
     @BeforeTest
     @Parameters("browser")
     public static void openBrowser(String browser) {
-        WebDriver driver = BrowserManager.doBrowserSetup(browser);
+        WebDriver driver = DriverManager.getDriver(browser);
         //set driver
         threadLocalDriver.set(driver);
         System.out.println("Before Test Thread ID: " + Thread.currentThread().getId());
@@ -101,11 +99,6 @@ public class WebBase {
             e.printStackTrace();
         }
     }
-
-    /*public static WebDriver getDriver() {
-        return driver;
-    }
-*/
 
     /**
      * Method to set browser for execution for local machine. While calling this
