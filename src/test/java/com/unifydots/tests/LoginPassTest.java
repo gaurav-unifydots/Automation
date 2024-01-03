@@ -7,16 +7,15 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+
 @Listeners({TestExecutionListener.class})
-public class FirstTest extends WebBase {
-    private static Logger logger = Logger.getLogger(FirstTest.class);
+public class LoginPassTest extends WebBase {
+    private static Logger logger = Logger.getLogger(LoginPassTest.class);
 
-    @Test(description = "First Test")
-    public void PrintNumbers() throws IOException {
-        logger.debug("base url value from property file ");
-        loginPage.login("standard_user", "secret_sauce");
+    @Test(description = "Login Success Test")
+    public void login(){
+        loginPage.loginPass("standard_user", "secret_sauce");
         loginPage.logOut();
-
     }
 
 }

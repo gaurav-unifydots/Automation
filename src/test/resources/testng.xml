@@ -8,19 +8,19 @@
     <test name="Unify Dots Tests Chrome" preserve-order="false">
         <parameter name="browser" value="chrome"></parameter>
         <classes>
-            <class name="com.unifydots.tests.FirstTest"></class>
+            <class name="com.unifydots.tests.LoginPassTest"></class>
         </classes>
     </test>
     <test name="Unify Dots Tests Firefox" preserve-order="false">
         <parameter name="browser" value="firefox"></parameter>
         <classes>
-            <class name="com.unifydots.tests.FirstTest"></class>
+            <class name="com.unifydots.tests.LoginPassTest"></class>
         </classes>
     </test>
     <test name="Unify Dots Tests Edge" preserve-order="false">
         <parameter name="browser" value="edge"></parameter>
         <classes>
-            <class name="com.unifydots.tests.FirstTest"></class>
+            <class name="com.unifydots.tests.LoginPassTest"></class>
         </classes>
     </test>
 </suite>

@@ -86,67 +86,6 @@ public class WebBase {
     }
 
     /**
-     * Method to set required values to execute test cases, for e.g. test
-     * environment, platform, and browser {@inheritDoc}
-     */
-    public void setUp() {
-
-        try {
-            /* select desired browser */
-            log.info("base url value from property file ");
-            setDesiredBrowser("chrome");
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Method to set browser for execution for local machine. While calling this
-     * method either pass friefox or chrome browser to execute scripts.
-     *
-     * @param desiredBrowser String
-     */
-    public static WebDriver setDesiredBrowser(String desiredBrowser) {
-        switch (desiredBrowser.toLowerCase()) {
-            case "chrome":
-                ChromeOptions chromeOptions = new ChromeOptions();
-                chromeOptions.addArguments("--no-sandbox");
-                chromeOptions.addArguments("--disable-dev-shm-usage");
-                chromeOptions.setPageLoadStrategy(PageLoadStrategy.NONE);
-                chromeOptions.addArguments("--disable-features=VizDisplayCompositor");
-                chromeOptions.addArguments("window-size=1920,1080");
-                WebDriverManager.chromedriver().setup();
-                driver = new ChromeDriver(chromeOptions);
-                break;
-            case "firefox":
-                System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "//src//main//resources//com.unifydots.driver//" + "geckodriver.exe");
-                DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-                capabilities.setCapability("marionette", true);
-                driver = new FirefoxDriver(capabilities);
-                break;
-            case "ie":
-                WebDriverManager.iedriver().setup();
-                driver = new InternetExplorerDriver();
-                break;
-            case "edge":
-                WebDriverManager.edgedriver().setup();
-                driver = new EdgeDriver();
-                break;
-            default:
-                WebDriverManager.chromedriver().setup();
-                driver = new ChromeDriver();
-                break;
-        }
-        driver.manage().window().maximize();
-        driver.manage().deleteAllCookies();
-        driver.manage().timeouts().pageLoadTimeout(SeleniumConstant.PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(SeleniumConstant.IMPLICIT_WAIT, TimeUnit.SECONDS);
-        driver.manage().timeouts().setScriptTimeout(SeleniumConstant.SETSCRIPT_TIMEOUT, TimeUnit.SECONDS);
-        driver.get("https://www.saucedemo.com/");
-        return driver;
-    }
-
-    /**
      * Method to get the title of current page
      */
     public String getTitle() {
@@ -210,7 +149,7 @@ public class WebBase {
      *
      * @param by
      */
-    public void waitForElementToBeClickable(By by) {
+    public static void waitForElementToBeClickable(By by) {
 
         new WebDriverWait(driver, 60).until(ExpectedConditions.elementToBeClickable(by));
     }
