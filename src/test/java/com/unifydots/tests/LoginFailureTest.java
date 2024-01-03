@@ -12,7 +12,7 @@ public class LoginFailureTest extends WebBase {
     private static Logger logger = Logger.getLogger(LoginFailureTest.class);
 
     @Test(description = "Login Failure Test")
-    public void PrintNumbers() throws Exception {
+    public void PrintNumbers(){
         logger.debug("base url value from property file ");
         loginPage.login("standard_user", "secret_sauce");
         loginPage.logOut();
