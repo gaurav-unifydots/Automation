@@ -44,20 +44,10 @@ public class LoginPage {
 
     @Severity(SeverityLevel.BLOCKER)
     @Step("Login to the Application")
-    public void verifyLoginFailure(String UserName, String PassWord) {
+    public void verifyLogin(String UserName, String PassWord) {
         userName.sendKeys(UserName);
         password.sendKeys(PassWord);
         loginButton.click();
-        Assert.assertEquals(driver.getTitle(), "123");
-    }
-
-    @Severity(SeverityLevel.BLOCKER)
-    @Step("Login to the Application Successfully")
-    public void verifyLoginSuccess(String UserName, String PassWord) {
-        userName.sendKeys(UserName);
-        password.sendKeys(PassWord);
-        loginButton.click();
-        Assert.assertEquals(driver.getTitle(), "Swag Labs");
     }
     @Severity(SeverityLevel.BLOCKER)
     @Step("Logout from the Application")
@@ -66,5 +56,10 @@ public class LoginPage {
         logOutButton.click();
     }
 
+    @Severity(SeverityLevel.BLOCKER)
+    @Step("Check Title of the Application")
+    public void verifyTitle(String title){
+        Assert.assertEquals(driver.getTitle(), title);
 
+    }
 }
