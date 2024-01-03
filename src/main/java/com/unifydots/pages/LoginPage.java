@@ -6,6 +6,7 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -43,20 +44,20 @@ public class LoginPage {
 
     @Severity(SeverityLevel.BLOCKER)
     @Step("Login to the Application")
-    public void login(String UserName, String PassWord) {
+    public void verifyLoginFailure(String UserName, String PassWord) {
         userName.sendKeys(UserName);
         password.sendKeys(PassWord);
         loginButton.click();
-        Assert.assertEquals(WebBase.getDriver().getTitle(), "123");
+        Assert.assertEquals(driver.getTitle(), "123");
     }
 
     @Severity(SeverityLevel.BLOCKER)
     @Step("Login to the Application Successfully")
-    public void loginPass(String UserName, String PassWord) {
+    public void verifyLoginSuccess(String UserName, String PassWord) {
         userName.sendKeys(UserName);
         password.sendKeys(PassWord);
         loginButton.click();
-        Assert.assertEquals(WebBase.getDriver().getTitle(), "Swag Labs");
+        Assert.assertEquals(driver.getTitle(), "Swag Labs");
     }
     @Severity(SeverityLevel.BLOCKER)
     @Step("Logout from the Application")
