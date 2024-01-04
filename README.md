@@ -12,7 +12,7 @@ mvn clean test
 #7)Generate Allure Reports using below command
 allure serve
 
-NOTE:If you want to run Tests parellely,you need to change parellel=tests in testng.xml and make Before annotation change to BeforeClass
+NOTE:If you want to run Tests parellely,you need to change parellel=tests in testng.xml and make Before annotation change to BeforeTest
 If you want to run Classes parellely,you need to change parellel=classes in testng.xml and make BeforeTest annotation change to BeforeClass.
 If you want to run Methods parellely,you need to change parellel=methods in testng.xml and make BeforeTest annotation change to BeforeMethod.
 NOTE: Same needs to be done with After annotations as well.
