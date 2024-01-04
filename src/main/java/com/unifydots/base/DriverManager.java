@@ -22,7 +22,6 @@ public class DriverManager {
             chromeOptions.addArguments("--disable-features=VizDisplayCompositor");
             chromeOptions.addArguments("window-size=1920,1080");
             WebDriverManager.chromedriver().clearDriverCache().setup();
-            //WebDriverManager.chromedriver().clearResolutionCache().setup();
             driver = new ChromeDriver(chromeOptions);
 
         } else if (browserName.equalsIgnoreCase("firefox")) {
