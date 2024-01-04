@@ -40,7 +40,6 @@ public class TestExecutionListener implements ITestListener {
         System.out.println("I am in onTestFailure method " + getTestMethodName(iTestResult) + " failed");
         Object testClass=iTestResult.getInstance();
         WebDriver driver = ((WebBase)testClass).getDriver();
-        System.out.println(driver instanceof WebDriver);
         if (driver instanceof WebDriver) {
             System.out.println("Screenshot captured for test case:" + getTestMethodName(iTestResult));
             saveFailureScreenShot(driver);
