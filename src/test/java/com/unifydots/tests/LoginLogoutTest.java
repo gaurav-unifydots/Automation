@@ -12,16 +12,15 @@ public class LoginLogoutTest extends WebBase {
 
     @Test(description = "Login Success Test")
     public void loginSuccessTest(){
-        loginPage.verifyLogin("standard_user", "secret_sauce");
+        loginPage.login("standard_user", "secret_sauce");
         loginPage.verifyTitle("Swag Labs");
         loginPage.logOut();
     }
 
     @Test(description = "Login Failure Test")
     public void loginFailureTest(){
-        loginPage.verifyLogin("standard_user", "secret_sauce123");
-        loginPage.verifyTitle("Swag Labs");
-        loginPage.logOut();
+        loginPage.login("standard_user", "secret_sauce123");
+        loginPage.verifyTitle("Swag Labs123");
 
     }
 

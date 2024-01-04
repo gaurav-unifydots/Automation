@@ -44,7 +44,7 @@ public class LoginPage {
 
     @Severity(SeverityLevel.BLOCKER)
     @Step("Login to the Application")
-    public void verifyLogin(String UserName, String PassWord) {
+    public void login(String UserName, String PassWord) {
         userName.sendKeys(UserName);
         password.sendKeys(PassWord);
         loginButton.click();

@@ -1,41 +1,27 @@
 package com.unifydots.base;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import com.google.common.base.Function;
 import com.unifydots.pages.LoginPage;
 import com.unifydots.utility.SeleniumConstant;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import com.google.common.base.Function;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.support.ui.*;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.time.Duration;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * BaseTest class for environment setting, and all common util methods which are
@@ -54,14 +40,14 @@ public class WebBase {
      * Initialize Actions class reference
      */
     public Actions action;
-    protected static
+    public static
     ThreadLocal<WebDriver> threadLocalDriver = new ThreadLocal<>();
 
 
-    @BeforeTest
+    @BeforeMethod
     @Parameters("browser")
     public static void openBrowser(String browser) {
-        WebDriver driver = DriverManager.getDriver(browser);
+        WebDriver driver = DriverManager.getDriverObject(browser);
         //set driver
         threadLocalDriver.set(driver);
         System.out.println("Before Test Thread ID: " + Thread.currentThread().getId());
@@ -70,7 +56,7 @@ public class WebBase {
         driver.manage().timeouts().pageLoadTimeout(SeleniumConstant.PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(SeleniumConstant.IMPLICIT_WAIT, TimeUnit.SECONDS);
         driver.manage().timeouts().setScriptTimeout(SeleniumConstant.SETSCRIPT_TIMEOUT, TimeUnit.SECONDS);
-        getDriver().get("https://www.saucedemo.com/");
+        driver.get("https://www.saucedemo.com/");
         loginPage = new LoginPage(driver);
     }
 
@@ -78,7 +64,7 @@ public class WebBase {
         return threadLocalDriver.get();
     }
 
-    @AfterTest
+    @AfterMethod
     public static void shutDown() {
         getDriver().quit();
         System.out.println("After Test Thread ID: " + Thread.currentThread().getId());

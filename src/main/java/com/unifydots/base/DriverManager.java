@@ -11,8 +11,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class DriverManager {
 
-
-    public static WebDriver getDriver(String browserName) {
+    public static WebDriver getDriverObject(String browserName) {
 
         WebDriver driver = null;
         if (browserName.equalsIgnoreCase("chrome")) {
@@ -22,9 +21,8 @@ public class DriverManager {
             chromeOptions.setPageLoadStrategy(PageLoadStrategy.NONE);
             chromeOptions.addArguments("--disable-features=VizDisplayCompositor");
             chromeOptions.addArguments("window-size=1920,1080");
-            //WebDriverManager.chromedriver().setup();
             WebDriverManager.chromedriver().clearDriverCache().setup();
-            WebDriverManager.chromedriver().clearResolutionCache().setup();
+            //WebDriverManager.chromedriver().clearResolutionCache().setup();
             driver = new ChromeDriver(chromeOptions);
 
         } else if (browserName.equalsIgnoreCase("firefox")) {
@@ -36,6 +34,11 @@ public class DriverManager {
         } else if (browserName.equalsIgnoreCase("edge")) {
             WebDriverManager.edgedriver().setup();
             driver = new EdgeDriver();
+        }else if (browserName.equalsIgnoreCase("headless")) {
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.addArguments("--headless");
+            WebDriverManager.chromedriver().clearDriverCache().setup();
+            driver = new ChromeDriver(chromeOptions);
         }
         return driver;
     }
