@@ -1,41 +1,27 @@
 package com.unifydots.base;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import com.google.common.base.Function;
 import com.unifydots.pages.LoginPage;
 import com.unifydots.utility.SeleniumConstant;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import com.google.common.base.Function;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.support.ui.*;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.time.Duration;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * BaseTest class for environment setting, and all common util methods which are
@@ -54,14 +40,14 @@ public class WebBase {
      * Initialize Actions class reference
      */
     public Actions action;
-    protected static
+    public static
     ThreadLocal<WebDriver> threadLocalDriver = new ThreadLocal<>();
 
 
-    @BeforeTest
-    @Parameters("browser")
-    public static void openBrowser(String browser) {
-        WebDriver driver = DriverManager.getDriver(browser);
+    @BeforeMethod
+    @Parameters({"browser","headless"})
+    public static void openBrowser(String browser,String headless) throws IOException {
+        WebDriver driver = DriverManager.getDriverObject(browser,headless);
         //set driver
         threadLocalDriver.set(driver);
         System.out.println("Before Test Thread ID: " + Thread.currentThread().getId());
@@ -70,7 +56,6 @@ public class WebBase {
         driver.manage().timeouts().pageLoadTimeout(SeleniumConstant.PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(SeleniumConstant.IMPLICIT_WAIT, TimeUnit.SECONDS);
         driver.manage().timeouts().setScriptTimeout(SeleniumConstant.SETSCRIPT_TIMEOUT, TimeUnit.SECONDS);
-        getDriver().get("https://www.saucedemo.com/");
         loginPage = new LoginPage(driver);
     }
 
@@ -78,72 +63,11 @@ public class WebBase {
         return threadLocalDriver.get();
     }
 
-    @AfterTest
+    @AfterMethod
     public static void shutDown() {
         getDriver().quit();
         System.out.println("After Test Thread ID: " + Thread.currentThread().getId());
         threadLocalDriver.remove();
-    }
-
-    /**
-     * Method to set required values to execute test cases, for e.g. test
-     * environment, platform, and browser {@inheritDoc}
-     */
-    public void setUp() {
-
-        try {
-            /* select desired browser */
-            log.info("base url value from property file ");
-            setDesiredBrowser("chrome");
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Method to set browser for execution for local machine. While calling this
-     * method either pass friefox or chrome browser to execute scripts.
-     *
-     * @param desiredBrowser String
-     */
-    public static WebDriver setDesiredBrowser(String desiredBrowser) {
-        switch (desiredBrowser.toLowerCase()) {
-            case "chrome":
-                ChromeOptions chromeOptions = new ChromeOptions();
-                chromeOptions.addArguments("--no-sandbox");
-                chromeOptions.addArguments("--disable-dev-shm-usage");
-                chromeOptions.setPageLoadStrategy(PageLoadStrategy.NONE);
-                chromeOptions.addArguments("--disable-features=VizDisplayCompositor");
-                chromeOptions.addArguments("window-size=1920,1080");
-                WebDriverManager.chromedriver().setup();
-                driver = new ChromeDriver(chromeOptions);
-                break;
-            case "firefox":
-                System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "//src//main//resources//com.unifydots.driver//" + "geckodriver.exe");
-                DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-                capabilities.setCapability("marionette", true);
-                driver = new FirefoxDriver(capabilities);
-                break;
-            case "ie":
-                WebDriverManager.iedriver().setup();
-                driver = new InternetExplorerDriver();
-                break;
-            case "edge":
-                WebDriverManager.edgedriver().setup();
-                driver = new EdgeDriver();
-                break;
-            default:
-                WebDriverManager.chromedriver().setup();
-                driver = new ChromeDriver();
-                break;
-        }
-        driver.manage().window().maximize();
-        driver.manage().deleteAllCookies();
-        driver.manage().timeouts().pageLoadTimeout(SeleniumConstant.PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(SeleniumConstant.IMPLICIT_WAIT, TimeUnit.SECONDS);
-        driver.manage().timeouts().setScriptTimeout(SeleniumConstant.SETSCRIPT_TIMEOUT, TimeUnit.SECONDS);
-        driver.get("https://www.saucedemo.com/");
-        return driver;
     }
 
     /**
@@ -210,7 +134,7 @@ public class WebBase {
      *
      * @param by
      */
-    public void waitForElementToBeClickable(By by) {
+    public static void waitForElementToBeClickable(By by) {
 
         new WebDriverWait(driver, 60).until(ExpectedConditions.elementToBeClickable(by));
     }
@@ -541,7 +465,7 @@ public class WebBase {
      * Method to read Properties File.
      */
     public static String getEnvironmentConfig(String key) throws IOException {
-        Properties application = readPropertiesFileContents("EN", "DEV");
+        Properties application = readPropertiesFileContents("EN", "QA");
         String value = application.getProperty(key);
         return value;
     }

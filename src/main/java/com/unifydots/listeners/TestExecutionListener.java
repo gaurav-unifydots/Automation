@@ -1,5 +1,6 @@
 package com.unifydots.listeners;
 
+import com.unifydots.base.DriverManager;
 import com.unifydots.base.WebBase;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
