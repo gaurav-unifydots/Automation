@@ -45,9 +45,9 @@ public class WebBase {
 
 
     @BeforeMethod
-    @Parameters("browser")
-    public static void openBrowser(String browser) {
-        WebDriver driver = DriverManager.getDriverObject(browser);
+    @Parameters({"browser","headless"})
+    public static void openBrowser(String browser,String headless) throws IOException {
+        WebDriver driver = DriverManager.getDriverObject(browser,headless);
         //set driver
         threadLocalDriver.set(driver);
         System.out.println("Before Test Thread ID: " + Thread.currentThread().getId());
@@ -56,7 +56,6 @@ public class WebBase {
         driver.manage().timeouts().pageLoadTimeout(SeleniumConstant.PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(SeleniumConstant.IMPLICIT_WAIT, TimeUnit.SECONDS);
         driver.manage().timeouts().setScriptTimeout(SeleniumConstant.SETSCRIPT_TIMEOUT, TimeUnit.SECONDS);
-        driver.get("https://www.saucedemo.com/");
         loginPage = new LoginPage(driver);
     }
 
@@ -466,7 +465,7 @@ public class WebBase {
      * Method to read Properties File.
      */
     public static String getEnvironmentConfig(String key) throws IOException {
-        Properties application = readPropertiesFileContents("EN", "DEV");
+        Properties application = readPropertiesFileContents("EN", "QA");
         String value = application.getProperty(key);
         return value;
     }

@@ -17,5 +17,9 @@ If you want to run Classes parellely,you need to change parellel=classes in test
 If you want to run Methods parellely,you need to change parellel=methods in testng.xml and make BeforeTest annotation change to BeforeMethod.
 NOTE: Same needs to be done with After annotations as well.
 
+NOTE:If you get issues like This chromedriver only supports 114 version
+Delete all existing folders in C:\Users\YOUR NAME\.cache\selenium\chromedriver\win32. 3. Create a new folder in C:\Users\YOURNAME\.cache\selenium\chromedriver\win32.
+2. and name it 116.0.5845.96. 4. Download chrome driver (Stable Version: 116.0.5845.96 (r1160321) ) from https://googlechromelabs.github.io/chrome-for-testing/. and unzip it to C:\Users\YOUR NAME\.cache\selenium\chromedriver\win32\1. 116.0.5845.96 folder
+NOTE:Instead of 116,choose the latest stable version.
 
 You are good to go.

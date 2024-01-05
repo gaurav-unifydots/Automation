@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Web Tests" parallel="methods" thread-count="4">
+<suite name="Web Tests" parallel="methods" thread-count="3">
     <listeners>
         <listener class-name="com.unifydots.listeners.TestExecutionListener"/>
     </listeners>
     <test name="Unify Dots Tests Chrome" preserve-order="false">
         <parameter name="browser" value="chrome"></parameter>
+        <parameter name="headless" value="false"></parameter>
         <classes>
             <class name="com.unifydots.tests.LoginLogoutTest">
                 <methods>
@@ -17,6 +18,7 @@
     </test>
     <test name="Unify Dots Tests Edge" preserve-order="false">
         <parameter name="browser" value="edge"></parameter>
+        <parameter name="headless" value="false"></parameter>
         <classes>
             <class name="com.unifydots.tests.LoginLogoutTest">
                 <methods>
@@ -27,16 +29,7 @@
     </test>
     <test name="Unify Dots Tests Firefox" preserve-order="false">
         <parameter name="browser" value="firefox"></parameter>
-        <classes>
-            <class name="com.unifydots.tests.LoginLogoutTest">
-                <methods>
-                    <include name="loginSuccessTest"></include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="Unify Dots Tests Headless" preserve-order="false">
-        <parameter name="browser" value="headless"></parameter>
+        <parameter name="headless" value="false"></parameter>
         <classes>
             <class name="com.unifydots.tests.LoginLogoutTest">
                 <methods>

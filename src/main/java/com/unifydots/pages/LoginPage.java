@@ -6,14 +6,13 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
+import java.io.IOException;
 
 public class LoginPage {
     public static WebDriver driver;
@@ -40,6 +39,13 @@ public class LoginPage {
 
         this.driver = driver;
         PageFactory.initElements(driver, this);
+    }
+
+    @Severity(SeverityLevel.BLOCKER)
+    @Step("Open the Application")
+    public void openApplication() throws IOException {
+        String url= WebBase.getEnvironmentConfig("base.url");
+        driver.get(url);
     }
 
     @Severity(SeverityLevel.BLOCKER)
