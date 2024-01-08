@@ -13,6 +13,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
+import org.testng.annotations.Optional;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,7 +47,7 @@ public class WebBase {
 
     @BeforeMethod
     @Parameters({"browser","headless"})
-    public static void openBrowser(String browser,String headless) throws IOException {
+    public static void openBrowser(@Optional("chrome") String browser,@Optional("false") String headless) throws IOException {
         WebDriver driver = DriverManager.getDriverObject(browser,headless);
         //set driver
         threadLocalDriver.set(driver);
