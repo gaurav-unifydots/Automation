@@ -46,9 +46,10 @@ public class WebBase {
 
 
     @BeforeMethod
-    @Parameters({"browser","headless"})
-    public static void openBrowser(@Optional("chrome") String browser,@Optional("false") String headless) throws IOException {
-        WebDriver driver = DriverManager.getDriverObject(browser,headless);
+    @Parameters({"browser", "headless"})
+    public static void openBrowser(@Optional("chrome") String browser, @Optional("false") String headless) throws IOException {
+        loadProfile();
+        WebDriver driver = DriverManager.getDriverObject(browser, headless);
         //set driver
         threadLocalDriver.set(driver);
         System.out.println("Before Test Thread ID: " + Thread.currentThread().getId());
@@ -466,7 +467,9 @@ public class WebBase {
      * Method to read Properties File.
      */
     public static String getEnvironmentConfig(String key) throws IOException {
-        Properties application = readPropertiesFileContents("EN", "QA");
+        String country = System.getProperty("country.name");
+        String environment = System.getProperty("environment.name");
+        Properties application = readPropertiesFileContents(country, environment);
         String value = application.getProperty(key);
         return value;
     }
@@ -475,10 +478,20 @@ public class WebBase {
      * Method to read Common Properties File.
      */
     public static String getCountryConfig(String key) throws IOException {
-        Properties application = readPropertiesFileContents("EN", "COMMON");
+        String country = System.getProperty("country.name");
+        Properties application = readPropertiesFileContents(country, "COMMON");
         String value = application.getProperty(key);
         return value;
     }
 
+    public static void loadProfile() throws IOException {
+        InputStream inputStream = null;
+        Properties prop = new Properties();
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        inputStream = loader.getResourceAsStream("country_config.properties");
+        prop = new Properties(System.getProperties());
+        prop.load(inputStream);
+        System.setProperties(prop);
+    }
 
 }
