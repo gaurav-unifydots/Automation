@@ -33,7 +33,7 @@ public class LoginPage {
     @FindBy(xpath = "//*[contains(text(),'Logout')]")
     private WebElement logOutButton;
 
-    private By logout=By.xpath("//*[contains(text(),'Logout')]");
+    private By logout = By.xpath("//*[contains(text(),'Logout')]");
 
     public LoginPage(WebDriver driver) {
 
@@ -44,7 +44,7 @@ public class LoginPage {
     @Severity(SeverityLevel.BLOCKER)
     @Step("Open the Application")
     public void openApplication() throws IOException {
-        String url= WebBase.getEnvironmentConfig("base.url");
+        String url = WebBase.getEnvironmentConfig("base.url");
         driver.get(url);
     }
 
@@ -55,16 +55,17 @@ public class LoginPage {
         password.sendKeys(PassWord);
         loginButton.click();
     }
+
     @Severity(SeverityLevel.BLOCKER)
     @Step("Logout from the Application")
-    public void logOut(){
+    public void logOut() {
         logOutImage.click();
         logOutButton.click();
     }
 
     @Severity(SeverityLevel.BLOCKER)
     @Step("Check Title of the Application")
-    public void verifyTitle(String title){
+    public void verifyTitle(String title) {
         Assert.assertEquals(driver.getTitle(), title);
 
     }

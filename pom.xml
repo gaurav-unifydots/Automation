@@ -158,5 +158,44 @@
                 </configuration>
             </plugin>
         </plugins>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
     </build>
+    <profiles>
+        <profile>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <id>DEV</id>
+            <properties>
+                <environment.name>DEV</environment.name>
+                <country.name>IN</country.name>
+            </properties>
+        </profile>
+        <profile>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <id>QA</id>
+            <properties>
+                <environment.name>QA</environment.name>
+                <country.name>EN</country.name>
+            </properties>
+        </profile>
+        <profile>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <id>PROD</id>
+            <properties>
+                <environment.name>PROD</environment.name>
+                <country.name>EN</country.name>
+            </properties>
+        </profile>
+    </profiles>
+
 </project>
